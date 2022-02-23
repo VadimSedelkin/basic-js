@@ -11,9 +11,32 @@ const { NotImplementedError } = require('../extensions/index.js');
  * getSeason(new Date(2020, 02, 31)) => 'spring'
  * 
  */
-function getSeason(/* date */) {
-  throw new NotImplementedError('Not implemented');
-  // remove line with error and write your code here
+
+function countProperties(object){
+  let counter = 0;
+  for(property in object){
+    counter++;
+  }
+  return counter;
+}
+
+function getSeason(date) {
+  let seasons = {
+    spring: [3, 4, 5],
+    summer: [6, 7, 8],
+    autumn: [9, 10, 11],
+    winter: [12, 1, 2]
+  };
+  if(typeof date === "undefined")
+    return 'Unable to determine the time of year!';
+  if(!(date instanceof Date) || countProperties(date) !== 0){
+    throw new Error('Invalid date!');
+  }
+  let dateMonth = date.getMonth() + 1;
+  for(season in seasons){
+    if(seasons[season].indexOf(dateMonth) !== -1)
+      return season;
+  }
 }
 
 module.exports = {
